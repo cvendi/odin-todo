@@ -27,6 +27,7 @@ class App {
     }
 
     renderProject (project) {
+        RenderProject.clearProjectContainer();
         const renderProject = new RenderProject(project);
         document.body.appendChild(renderProject.render());
     }
@@ -45,6 +46,32 @@ class App {
                 return task;
             }
         }
+    }
+
+    init () {
+        this.renderProject(defaultProject)
+
+        const mainContainer = document.querySelector('.main-container');
+
+        const buttonDiv = document.createElement('div');
+        buttonDiv.classList.add('project-buttons');
+        const createProjectButton = document.createElement('button');
+        createProjectButton.textContent = 'Create Project';
+        createProjectButton.addEventListener("click", () => {
+            console.log('Create Project Button clicked');
+        })
+
+        this.projects.forEach(project => {
+            const projectButton = document.createElement('button');
+            projectButton.textContent = project.name;
+            projectButton.addEventListener("click", () => {
+                console.log(`Project button pressed for ${project.name}`)
+                this.renderProject(project);
+            })
+            buttonDiv.appendChild(projectButton);
+        })
+        buttonDiv.appendChild(createProjectButton);
+        mainContainer.appendChild(buttonDiv);
     }
 }
 
@@ -136,4 +163,4 @@ app.createTask(
     customProject.id
 );
 
-app.renderProject(defaultProject);
+app.init()

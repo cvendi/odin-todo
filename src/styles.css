@@ -20,7 +20,13 @@ body {
     grid-row: 1;
     grid-column: 2;
     display: flex;
+    justify-content: space-between;
+}
+
+.project-buttons {
+    display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .project-container {

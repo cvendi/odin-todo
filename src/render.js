@@ -1,7 +1,12 @@
-
 export default class RenderProject {
     constructor(project) {
         this.project = project;
+    }
+
+    static clearProjectContainer() {
+        let projectContainer = document.querySelector('.project-container');
+        if (!projectContainer) return;
+        document.body.removeChild(projectContainer);
     }
 
     render() {
@@ -41,6 +46,7 @@ export default class RenderProject {
 
             const expandButton = document.createElement('button');
             expandButton.textContent = '>';
+            expandButton.style.backgroundColor = 'var(--nord9)';
 
             let expanded = false;
             let taskDescription;
@@ -68,11 +74,28 @@ export default class RenderProject {
                     task.toggleComplete();
                     completeButton.textContent = task.completed ? 'x' : '';
                     taskItem.classList.toggle('completed', task.completed);
+                    if (task.completed) {
+                        taskItem.style.border = '1px solid var(--nord14)';
+                        taskPriority.textContent = '  Complete';
+                        taskDueDate.textContent = '';
+                        taskPriority.style.color = 'var(--nord14)';
+                        taskTitle.style.color = 'var(--nord14)';
+                        taskDueDate.style.color = 'var(--nord14)';
+                        completeButton.style.backgroundColor = 'var(--nord11)';
+                    } else {
+                        taskItem.style.border = '';
+                        taskPriority.textContent = `Priority: ${task.priority}`;
+                        taskPriority.style.color = '';
+                        taskTitle.style.color = '';
+                        taskDueDate.style.color = '';
+                        completeButton.style.backgroundColor = '';
+                    }
                 });
                 buttonContainer.appendChild(completeButton);
 
                 const deleteButton = document.createElement('button');
                 deleteButton.classList.add('delete-button')
+                deleteButton.style.backgroundColor = 'var(--nord11)';
                 deleteButton.textContent = '-';
                 deleteButton.addEventListener('click', () => {
                     this.project.removeTask(task.id);
