@@ -1,0 +1,11 @@
+* { 
+    box-sizing: border-box; 
+}
+
+html, body {
+    font-family: system-ui, sans-serif;
+    background-color: var(--nord3);
+    color: var(--nord9);
+    height: 100%;
+    margin: 0;
+}
