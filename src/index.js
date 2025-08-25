@@ -5,6 +5,8 @@ import Task from "./task.js";
 import Project from "./project.js";
 import RenderProject from "./render.js";
 
+import { format } from "date-fns";
+
 class App {
     constructor() {
         this.projects = [];
@@ -59,9 +61,25 @@ const defaultProject = app.createProject("Default Project");
 const customProject = app.createProject("Custom Project");
 
 app.createTask(
-    "Welcome to Odin To-Do",
-    "This is a welcome task to get you started. Feel free to delete it.",
-    "2025-12-31",
+    "Remember to do something!",
+    "This is a future task with a dueDate yet to pass.",
+    format(new Date(2025, 11, 31), "MM-dd-yyyy"),
+    "High",
+    defaultProject.id // This will eventually be dynamic based on the currently selected project in the UI
+);
+
+app.createTask(
+    "Did you forget something?",
+    "This is a task with a dueDate that has passed, and should be identified as such in the UI.",
+    format(new Date(2025, 6, 28), "MM-dd-yyyy"),
+    "High",
+    defaultProject.id // This will eventually be dynamic based on the currently selected project in the UI
+);
+
+app.createTask(
+    "Welcome to Odin To-Do!",
+    "This is a welcome task to get you started. It is the first and oldest task in the project. Feel free to delete it.",
+    format(new Date(2025, 2, 12), "MM-dd-yyyy"),
     "High",
     defaultProject.id // This will eventually be dynamic based on the currently selected project in the UI
 );
@@ -69,7 +87,7 @@ app.createTask(
 app.createTask(
     "Custom Task",
     "This is a custom task in the custom project.",
-    "2025-11-30",
+    format(new Date(2025, 10, 30), "MM-dd-yyyy"),
     "Medium",
     customProject.id
 );

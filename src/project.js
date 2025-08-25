@@ -1,3 +1,4 @@
+import { compareDesc } from "date-fns";
 
 export default class Project {
     constructor(id, name) {
@@ -15,6 +16,9 @@ export default class Project {
     };
 
     getTasks() {
-        return this.tasks;
+        // Tasks are sorted by dueDate in descending order (latest dueDate first)
+        return this.tasks
+            .slice()
+            .sort((a, b) => compareDesc(new Date(a.dueDate), new Date(b.dueDate)))
     };
 };
