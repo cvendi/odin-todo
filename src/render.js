@@ -85,6 +85,7 @@ export default class RenderProject {
                     } else {
                         taskItem.style.border = '';
                         taskPriority.textContent = `Priority: ${task.priority}`;
+                        taskDueDate.textContent = `Due: ${task.dueDate}`;
                         taskPriority.style.color = '';
                         taskTitle.style.color = '';
                         taskDueDate.style.color = '';
