@@ -12,6 +12,9 @@ export default class RenderProject {
         projectTitle.textContent = this.project.name;
         projectContainer.appendChild(projectTitle);
 
+        const taskContainer = document.createElement('div');
+        taskContainer.classList.add('task-container');
+
         const taskList = document.createElement('ul');
         taskList.classList.add('task-list');
 
@@ -23,34 +26,62 @@ export default class RenderProject {
             taskTitle.textContent = task.title;
             taskItem.appendChild(taskTitle);
 
-            const taskDescription = document.createElement('p');
-            taskDescription.textContent = task.description;
-            taskItem.appendChild(taskDescription);
-
             const taskDueDate = document.createElement('p');
             taskDueDate.textContent = `Due: ${task.dueDate}`;
+            taskDueDate.classList.add('due-date');
             taskItem.appendChild(taskDueDate);
 
             const taskPriority = document.createElement('p');
             taskPriority.textContent = `Priority: ${task.priority}`;
+            taskPriority.classList.add('priority');
             taskItem.appendChild(taskPriority);
 
-            const completeButton = document.createElement('button');
-            completeButton.textContent = task.completed ? 'Mark Incomplete' : 'Mark Complete';
-            completeButton.addEventListener('click', () => {
-                task.toggleComplete();
-                completeButton.textContent = task.completed ? 'Mark Incomplete' : 'Mark Complete';
-                taskItem.classList.toggle('completed', task.completed);
-            });
-            taskItem.appendChild(completeButton);
+            const buttonContainer = document.createElement('div');
+            buttonContainer.classList.add('button-container');
 
-            const deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Delete Task';
-            deleteButton.addEventListener('click', () => {
-                this.project.removeTask(task.id);
-                taskList.removeChild(taskItem);
+            const expandButton = document.createElement('button');
+            expandButton.textContent = '>';
+
+            let expanded = false;
+            let taskDescription;
+            expandButton.addEventListener('click', () => {
+                if (!expanded) {
+                    taskDescription = document.createElement('p');
+                    taskDescription.textContent = task.description;
+                    taskDescription.classList.add('task-description');
+                    taskItem.appendChild(taskDescription);
+                    expandButton.textContent = 'v';
+                    expanded = true;
+                } else {
+                    if (taskDescription) {
+                        taskItem.removeChild(taskDescription);
+                    }
+                    expandButton.textContent = '>';
+                    expanded = false;
+                }
             });
-            taskItem.appendChild(deleteButton);
+
+            const completeButton = document.createElement('button');
+                completeButton.textContent = task.completed ? 'x' : '';
+                completeButton.classList.add('complete-button');
+                completeButton.addEventListener('click', () => {
+                    task.toggleComplete();
+                    completeButton.textContent = task.completed ? 'x' : '';
+                    taskItem.classList.toggle('completed', task.completed);
+                });
+                buttonContainer.appendChild(completeButton);
+
+                const deleteButton = document.createElement('button');
+                deleteButton.classList.add('delete-button')
+                deleteButton.textContent = '-';
+                deleteButton.addEventListener('click', () => {
+                    this.project.removeTask(task.id);
+                    taskList.removeChild(taskItem);
+                });
+                buttonContainer.appendChild(deleteButton);
+
+            buttonContainer.appendChild(expandButton);
+            taskItem.appendChild(buttonContainer);
 
             if (task.completed) {
                 taskItem.classList.add('completed');
@@ -59,7 +90,8 @@ export default class RenderProject {
             taskList.appendChild(taskItem);
         });
 
-        projectContainer.appendChild(taskList);
+        taskContainer.appendChild(taskList)
+        projectContainer.appendChild(taskContainer);
         return projectContainer;
     }
 }

@@ -26,12 +26,9 @@ class App {
         return this.projects;
     }
 
-    renderProjects () {
-        this.projects.forEach(project => {
-            const renderProject = new RenderProject(project);
-            document.body.appendChild(renderProject.render());
-        }); // This will be changed, and will only render a single selected project, with the ability to switch between projects,
-            // preferably through a tabbed interface
+    renderProject (project) {
+        const renderProject = new RenderProject(project);
+        document.body.appendChild(renderProject.render());
     }
 
     createTask(title, description, dueDate, priority, projectId) {
@@ -42,10 +39,8 @@ class App {
             dueDate, 
             priority
         );
-        console.log(this.projects);
         for (let project of this.projects) {
             if (project.id === projectId) {
-                console.log(project.id);
                 project.addTask(task);
                 return task;
             }
@@ -69,7 +64,7 @@ app.createTask(
 );
 
 app.createTask(
-    "Did you forget something?",
+    "This is a longer task that should wrap down within the first grid column.",
     "This is a task with a dueDate that has passed, and should be identified as such in the UI.",
     format(new Date(2025, 6, 28), "MM-dd-yyyy"),
     "High",
@@ -77,13 +72,62 @@ app.createTask(
 );
 
 app.createTask(
-    "Welcome to Odin To-Do!",
-    "This is a welcome task to get you started. It is the first and oldest task in the project. Feel free to delete it.",
-    format(new Date(2025, 2, 12), "MM-dd-yyyy"),
+    "Submit quarterly report",
+    "Finish and submit the Q3 performance report by end of day.",
+    format(new Date(2025, 8, 30), "MM-dd-yyyy"),
     "High",
-    defaultProject.id // This will eventually be dynamic based on the currently selected project in the UI
+    defaultProject.id
 );
 
+app.createTask(
+    "Schedule dentist appointment",
+    "Call Dr. Martinez's office to book a cleaning for next month.",
+    format(new Date(2025, 9, 15), "MM-dd-yyyy"),
+    "Medium",
+    defaultProject.id
+);
+
+app.createTask(
+    "Renew driver's license",
+    "Visit DMV before expiration to renew license and update photo.",
+    format(new Date(2025, 7, 10), "MM-dd-yyyy"),
+    "High",
+    defaultProject.id
+);
+
+app.createTask(
+    "Research new accounting software",
+    "Compare features and pricing for QuickBooks vs FreshBooks vs Xero.",
+    format(new Date(2025, 10, 5), "MM-dd-yyyy"),
+    "Low",
+    defaultProject.id
+);
+
+app.createTask(
+    "Plan weekend hiking trip",
+    "Reserve campsite and check weather forecast for mountain trails.",
+    format(new Date(2025, 8, 27), "MM-dd-yyyy"),
+    "Medium",
+    defaultProject.id
+);
+
+app.createTask(
+    "Update portfolio website",
+    "Add recent React projects and optimize images for faster loading.",
+    format(new Date(2025, 6, 20), "MM-dd-yyyy"),
+    "Medium",
+    defaultProject.id
+);
+
+app.createTask(
+    "Backup laptop files",
+    "Run full system backup to external drive before traveling next week.",
+    format(new Date(2025, 8, 29), "MM-dd-yyyy"),
+    "High",
+    defaultProject.id
+);
+
+// Test tasks for second project
 app.createTask(
     "Custom Task",
     "This is a custom task in the custom project.",
@@ -92,4 +136,4 @@ app.createTask(
     customProject.id
 );
 
-app.renderProjects();
+app.renderProject(defaultProject);
