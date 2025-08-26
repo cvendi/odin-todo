@@ -1,9 +1,14 @@
+@font-face {
+    font-family: "JetBrainsMono";
+    src: url("JetBrainsMono-Regular.woff2") format("woff2");
+}
+
 * { 
     box-sizing: border-box; 
 }
 
 html, body {
-    font-family: system-ui, sans-serif;
+    font-family: "JetBrainsMono", sans-serif;
     background-color: var(--nord3);
     color: var(--nord9);
     height: 100%;
@@ -69,6 +74,7 @@ body {
     border-radius: 10px;
     padding: 10px;
     margin-bottom: 50px;
+    margin-top: 50px;
 }
 
 .task-item, .input-item {
@@ -93,7 +99,7 @@ body {
 }
 
 .input-item button {
-    width: 75px;
+    width: 100px;
     height: 50px;
     background-color: var(--nord9);
     border: none;

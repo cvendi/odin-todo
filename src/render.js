@@ -1,3 +1,5 @@
+import { format } from "date-fns";
+
 export default class RenderProject {
     constructor(project) {
         this.project = project;
@@ -13,10 +15,6 @@ export default class RenderProject {
         console.log('Rendering the project...');
         const projectContainer = document.createElement('div');
         projectContainer.classList.add('project-container');
-
-        const projectTitle = document.createElement('h2');
-        projectTitle.textContent = this.project.name;
-        projectContainer.appendChild(projectTitle);
 
         const taskContainer = document.createElement('div');
         taskContainer.classList.add('task-container');
@@ -78,10 +76,10 @@ export default class RenderProject {
             this.project.createTask(
                 taskInput.value,
                 taskDescriptionInput.value,
-                dueDateInput.value,
+                format(dueDateInput.valueAsDate, "MM-dd-yyyy"),
                 chosenPriority
             )
-            console.log(this.project);
+            console.log(dueDateInput.value);
             RenderProject.clearProjectContainer();
             document.body.appendChild(this.render());
         });
@@ -139,7 +137,7 @@ export default class RenderProject {
                     taskItem.classList.toggle('completed', task.completed);
                     if (task.completed) {
                         taskItem.style.border = '1px solid var(--nord14)';
-                        taskPriority.textContent = '  Complete';
+                        taskPriority.textContent = '🟢 Complete';
                         taskDueDate.textContent = '';
                         taskPriority.style.color = 'var(--nord14)';
                         taskTitle.style.color = 'var(--nord14)';

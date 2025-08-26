@@ -4,8 +4,6 @@ import "./nord.css";
 import Project from "./project.js";
 import RenderProject from "./render.js";
 
-import { format } from "date-fns";
-
 class App {
     constructor() {
         this.projects = [];
@@ -79,6 +77,7 @@ class App {
             const newProject = this.createProject("Testing Button Creation");
             this.updateProjectSelector();
 
+            // Switch to newly created project
             this.projectSelector.value = newProject.id;
             this.renderProject(newProject);
         })
@@ -96,6 +95,6 @@ let app = new App();
 // Will want to create projects and tasks through UI,
 // and load projects and their tasks from local storage
 const defaultProject = app.createProject("Default Project");
-const customProject = app.createProject("Custom Project");
 
+defaultProject.seedProject();
 app.init()
