@@ -32,8 +32,8 @@ export default class RenderProject {
     taskInput.classList.add("task-input");
     userInputItem.appendChild(taskInput);
 
-    const taskDescriptionInput = document.createElement("input");
-    taskDescriptionInput.type = "text";
+    const taskDescriptionInput = document.createElement("textarea");
+    // taskDescriptionInput.type = "textarea";
     taskDescriptionInput.placeholder = "Describe your task...";
     taskDescriptionInput.classList.add("task-description-input");
     userInputItem.appendChild(taskDescriptionInput);
@@ -45,7 +45,7 @@ export default class RenderProject {
     dueDateInput.type = "date";
     dueDateInput.value = format(new Date(), "yyyy-MM-dd");
     console.log(dueDateInput.value);
-    datePriorityDiv.appendChild(dueDateInput);
+    userInputItem.appendChild(dueDateInput);
 
     const priorityValues = ["High", "Medium", "Low"];
 
@@ -58,8 +58,8 @@ export default class RenderProject {
     });
 
     prioritySelector.classList.add("priority-select");
-    datePriorityDiv.appendChild(prioritySelector);
-    userInputItem.appendChild(datePriorityDiv);
+    userInputItem.appendChild(prioritySelector);
+    //  userInputItem.appendChild(datePriorityDiv);
 
     const submitButton = document.createElement("button");
     submitButton.classList.add("submit-task-button");
