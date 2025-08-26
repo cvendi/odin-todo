@@ -79,7 +79,7 @@ export default class RenderProject {
                 format(dueDateInput.valueAsDate, "MM-dd-yyyy"),
                 chosenPriority
             )
-            console.log(dueDateInput.value);
+            console.log(dueDateInput.valueAsDate);
             RenderProject.clearProjectContainer();
             document.body.appendChild(this.render());
         });
@@ -129,11 +129,11 @@ export default class RenderProject {
             });
 
             const completeButton = document.createElement('button');
-                completeButton.textContent = task.completed ? 'x' : '';
+                completeButton.textContent = task.completed ? 'x' : '+';
                 completeButton.classList.add('complete-button');
                 completeButton.addEventListener('click', () => {
                     task.toggleComplete();
-                    completeButton.textContent = task.completed ? 'x' : '';
+                    completeButton.textContent = task.completed ? 'x' : '+';
                     taskItem.classList.toggle('completed', task.completed);
                     if (task.completed) {
                         taskItem.style.border = '1px solid var(--nord14)';

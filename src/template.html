@@ -7,7 +7,19 @@
 </head>
 <body>
     <div class="main-container">
-        <h1>Odin To-Do<hr style="color: var(--nord14);"></h1>
+        <dialog id="create-proj-dialog">
+            <form class="create-proj-form">
+                <p>
+                    <label>Project name:
+                        <input class="project-name" id="project-name" type="text" required />
+                    </label>
+                </p>
+                <div>
+                    <button id="closeBtn" value="cancel" formmethod="dialog">Cancel</button>
+                    <button id="confirmBtn" value="default">Create</button>
+                </div>
+            </form>
+        </dialog>
     </div>
 </body>
 </html>

@@ -4,6 +4,8 @@ import "./nord.css";
 import Project from "./project.js";
 import RenderProject from "./render.js";
 
+import { format } from "date-fns";
+
 class App {
     constructor() {
         this.projects = [];
@@ -71,19 +73,39 @@ class App {
 
         const buttonDiv = document.createElement('div');
         buttonDiv.classList.add('project-buttons');
+
+        const createProjectDialog = document.getElementById("create-proj-dialog");
+        const projectNameInput = document.getElementById("project-name");
+        const confirmProjectCreateBtn = document.getElementById("confirmBtn");
+        const form = createProjectDialog.querySelector("form");
+
         const createProjectButton = document.createElement('button');
         createProjectButton.textContent = 'Create Project';
+        createProjectButton.type = 'button';
         createProjectButton.addEventListener("click", () => {
-            const newProject = this.createProject("Testing Button Creation");
-            this.updateProjectSelector();
+            // const newProject = this.createProject("Testing Button Creation");
+            // this.updateProjectSelector();
 
-            // Switch to newly created project
-            this.projectSelector.value = newProject.id;
-            this.renderProject(newProject);
+            projectNameInput.value = "";
+            createProjectDialog.close();
+            createProjectDialog.showModal();
         })
 
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const name = projectNameInput.value.trim();
+            if (name) {
+                const newProject = this.createProject(name);
+                this.updateProjectSelector();
+
+                // Switch to newly created project
+                this.projectSelector.value = newProject.id;
+                this.renderProject(newProject);
+                createProjectDialog.close();
+            }
+        });
+
         buttonDiv.appendChild(createProjectButton);
-        mainContainer.innerHTML = '';
         mainContainer.appendChild(logo);
         mainContainer.appendChild(selectorDiv);
         mainContainer.appendChild(buttonDiv);
@@ -96,5 +118,15 @@ let app = new App();
 // and load projects and their tasks from local storage
 const defaultProject = app.createProject("Default Project");
 
-defaultProject.seedProject();
+defaultProject.createTask(
+            "Welcome to Odin To-Do!",
+            `This is a welcome task to get you started.
+            Feel free to delete it with the red - on the right, or mark it as complete with the green + button.
+            To create new tasks, fill out the form above.
+            You can also create new projects for a separate list of tasks using the Create Project button.`,
+            format(new Date(), "MM-dd-yyyy"),
+            "Low",
+        );
+
+// defaultProject.seedProject();
 app.init()
