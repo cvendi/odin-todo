@@ -10,6 +10,7 @@ export default class RenderProject {
     }
 
     render() {
+        console.log('Rendering the project...');
         const projectContainer = document.createElement('div');
         projectContainer.classList.add('project-container');
 
@@ -23,6 +24,68 @@ export default class RenderProject {
         const taskList = document.createElement('ul');
         taskList.classList.add('task-list');
 
+        const userInputItem = document.createElement('li');
+        userInputItem.classList.add('input-item');
+
+        const taskInput = document.createElement('input');
+        taskInput.type = 'text';
+        taskInput.placeholder = 'What is your task?'
+        taskInput.classList.add('task-input');
+        userInputItem.appendChild(taskInput);
+
+        const taskDescriptionInput = document.createElement('input');
+        taskDescriptionInput.type = 'text';
+        taskDescriptionInput.placeholder = 'Describe your task...'
+        taskDescriptionInput.classList.add('task-description-input');
+        userInputItem.appendChild(taskDescriptionInput);
+
+        const datePriorityDiv = document.createElement('div');
+        datePriorityDiv.classList.add('date-priority-div');
+
+        const dueDateInput = document.createElement('input');
+        dueDateInput.type = 'date';
+        dueDateInput.valueAsDate = new Date();
+        datePriorityDiv.appendChild(dueDateInput);
+
+        const priorityValues = ['High', 'Medium', 'Low'];
+
+        const prioritySelector = document.createElement('select');
+        priorityValues.forEach(priority => {
+            const priorityOption = document.createElement('option');
+            priorityOption.textContent = priority;
+            priorityOption.value = priority;
+            prioritySelector.appendChild(priorityOption);
+        });
+
+        prioritySelector.classList.add('priority-select');
+        datePriorityDiv.appendChild(prioritySelector);
+        userInputItem.appendChild(datePriorityDiv);
+
+        const submitButton = document.createElement('button');
+        submitButton.classList.add('submit-task-button');
+        submitButton.style.backgroundColor = 'var(--nord14)';
+        submitButton.textContent = '+';
+        userInputItem.appendChild(submitButton);
+
+        taskList.appendChild(userInputItem);
+
+        let chosenPriority = 'High';
+        prioritySelector.onchange = (e) => {
+            chosenPriority = e.target.value;
+        };
+
+        submitButton.addEventListener("click", () => {
+            this.project.createTask(
+                taskInput.value,
+                taskDescriptionInput.value,
+                dueDateInput.value,
+                chosenPriority
+            )
+            console.log(this.project);
+            RenderProject.clearProjectContainer();
+            document.body.appendChild(this.render());
+        });
+        
         this.project.getTasks().forEach(task => {
             const taskItem = document.createElement('li');
             taskItem.classList.add('task-item');
