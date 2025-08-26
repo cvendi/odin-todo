@@ -110,7 +110,18 @@ body {
     grid-column: 1 / 4;
 }
 
-.task-item, .input-item {
+.input-item {
+    border: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 100px;
+    grid-template-rows: 1fr;
+    margin-right: 35px;
+    margin-top: 25px;
+    padding: 20px;
+    gap: 10px;
+}
+
+.task-item {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 100px;
     grid-template-rows: 1fr;

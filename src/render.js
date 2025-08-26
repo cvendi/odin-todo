@@ -64,7 +64,7 @@ export default class RenderProject {
         const submitButton = document.createElement('button');
         submitButton.classList.add('submit-task-button');
         submitButton.style.backgroundColor = 'var(--nord14)';
-        submitButton.textContent = '+';
+        submitButton.textContent = 'Create';
         userInputItem.appendChild(submitButton);
 
         taskList.appendChild(userInputItem);
