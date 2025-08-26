@@ -4,7 +4,8 @@
 }
 
 * { 
-    box-sizing: border-box; 
+    box-sizing: border-box;
+    font-family: "JetBrainsMono", sans-serif;
 }
 
 :modal {
@@ -37,7 +38,6 @@
 }
 
 html, body {
-    font-family: "JetBrainsMono", sans-serif;
     background-color: var(--nord3);
     color: var(--nord9);
     height: 100%;
