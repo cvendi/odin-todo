@@ -3,6 +3,7 @@ import "./nord.css";
 
 import Project from "./project.js";
 import RenderProject from "./render.js";
+import { saveToLocalStorage, loadProjectsFromLocalStorage } from "./storage.js";
 
 import { format } from "date-fns";
 
@@ -22,13 +23,10 @@ class App {
         this.projects.push(project);
     }
 
-    getProjects() {
-        return this.projects;
-    }
-
     renderProject (project) {
         RenderProject.clearProjectContainer();
         const renderProject = new RenderProject(project);
+        saveToLocalStorage(this.projects);
         document.body.appendChild(renderProject.render());
     }
 
@@ -59,7 +57,28 @@ class App {
     }
 
     init () {
-        this.renderProject(defaultProject)
+        // Load from storage or seed a default project
+        const stored = loadProjectsFromLocalStorage();
+        if (stored && stored.length > 0) {
+            this.projects = stored;
+        } else {
+            const defaultProject = this.createProject("Default Project");
+            defaultProject.createTask(
+                "Welcome to Odin To-Do!",
+                `This is a welcome task to get you started.
+            Feel free to delete it with the red - on the right, or mark it as complete with the green + button.
+            To create new tasks, fill out the form above.
+            You can also create new projects for a separate list of tasks using the Create Project button.`,
+                format(new Date(), "yyyy-MM-dd"),
+                "Low",
+            );
+            defaultProject.seedProject();
+        }
+
+        // Render the first project
+        if (this.projects.length > 0) {
+            this.renderProject(this.projects[0]);
+        }
 
         const mainContainer = document.querySelector('.main-container');
 
@@ -76,16 +95,12 @@ class App {
 
         const createProjectDialog = document.getElementById("create-proj-dialog");
         const projectNameInput = document.getElementById("project-name");
-        const confirmProjectCreateBtn = document.getElementById("confirmBtn");
         const form = createProjectDialog.querySelector("form");
 
         const createProjectButton = document.createElement('button');
         createProjectButton.textContent = 'Create Project';
         createProjectButton.type = 'button';
         createProjectButton.addEventListener("click", () => {
-            // const newProject = this.createProject("Testing Button Creation");
-            // this.updateProjectSelector();
-
             projectNameInput.value = "";
             createProjectDialog.close();
             createProjectDialog.showModal();
@@ -109,24 +124,12 @@ class App {
         mainContainer.appendChild(logo);
         mainContainer.appendChild(selectorDiv);
         mainContainer.appendChild(buttonDiv);
+
+        saveToLocalStorage(this.projects);
     }
 }
 
 let app = new App();
-
-// Will want to create projects and tasks through UI,
-// and load projects and their tasks from local storage
-const defaultProject = app.createProject("Default Project");
-
-defaultProject.createTask(
-            "Welcome to Odin To-Do!",
-            `This is a welcome task to get you started.
-            Feel free to delete it with the red - on the right, or mark it as complete with the green + button.
-            To create new tasks, fill out the form above.
-            You can also create new projects for a separate list of tasks using the Create Project button.`,
-            format(new Date(), "yyyy-MM-dd"),
-            "Low",
-        );
-
-defaultProject.seedProject();
+// Expose app globally so renders can trigger saves
+window.app = app;
 app.init()

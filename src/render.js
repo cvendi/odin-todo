@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { saveToLocalStorage } from "./storage.js";
 
 export default class RenderProject {
     constructor(project) {
@@ -80,6 +81,7 @@ export default class RenderProject {
                 dueDateInput.value,
                 chosenPriority
             )
+            if (window.app) saveToLocalStorage(window.app.projects);
             RenderProject.clearProjectContainer();
             document.body.appendChild(this.render());
         });
@@ -135,6 +137,7 @@ export default class RenderProject {
                     task.toggleComplete();
                     completeButton.textContent = task.completed ? 'x' : '+';
                     taskItem.classList.toggle('completed', task.completed);
+                    if (window.app) saveToLocalStorage(window.app.projects);
                     if (task.completed) {
                         taskItem.style.border = '1px solid var(--nord14)';
                         taskPriority.textContent = '🟢 Complete';
@@ -154,6 +157,24 @@ export default class RenderProject {
                     }
                 });
                 buttonContainer.appendChild(completeButton);
+                
+                if (task.completed) {
+                    taskItem.style.border = '1px solid var(--nord14)';
+                    taskPriority.textContent = '🟢 Complete';
+                    taskDueDate.textContent = '';
+                    taskPriority.style.color = 'var(--nord14)';
+                    taskTitle.style.color = 'var(--nord14)';
+                    taskDueDate.style.color = 'var(--nord14)';
+                    completeButton.style.backgroundColor = 'var(--nord11)';
+                } else {
+                    taskItem.style.border = '';
+                    taskPriority.textContent = `Priority: ${task.priority}`;
+                    taskDueDate.textContent = `Due: ${task.dueDate}`;
+                    taskPriority.style.color = '';
+                    taskTitle.style.color = '';
+                    taskDueDate.style.color = '';
+                    completeButton.style.backgroundColor = '';
+                };
 
                 const deleteButton = document.createElement('button');
                 deleteButton.classList.add('delete-button')
@@ -162,6 +183,7 @@ export default class RenderProject {
                 deleteButton.addEventListener('click', () => {
                     this.project.removeTask(task.id);
                     taskList.removeChild(taskItem);
+                    if (window.app) saveToLocalStorage(window.app.projects);
                 });
                 buttonContainer.appendChild(deleteButton);
 
