@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Odin To-Do</title>
+<script defer src="main.js"></script></head>
+<body>
+    <div class="main-container">
+        <dialog id="create-proj-dialog">
+            <form class="create-proj-form">
+                <p>
+                    <label>Project name:
+                        <input class="project-name" id="project-name" type="text" required />
+                    </label>
+                </p>
+                <div>
+                    <button id="closeBtn" value="cancel" formmethod="dialog">Cancel</button>
+                    <button id="confirmBtn" value="default">Create</button>
+                </div>
+            </form>
+        </dialog>
+    </div>
+</body>
+</html>
