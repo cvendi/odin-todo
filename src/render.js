@@ -42,7 +42,8 @@ export default class RenderProject {
 
         const dueDateInput = document.createElement('input');
         dueDateInput.type = 'date';
-        dueDateInput.valueAsDate = new Date();
+        dueDateInput.value = format(new Date(), "yyyy-MM-dd");
+        console.log(dueDateInput.value);
         datePriorityDiv.appendChild(dueDateInput);
 
         const priorityValues = ['High', 'Medium', 'Low'];
@@ -76,10 +77,9 @@ export default class RenderProject {
             this.project.createTask(
                 taskInput.value,
                 taskDescriptionInput.value,
-                format(dueDateInput.valueAsDate, "MM-dd-yyyy"),
+                dueDateInput.value,
                 chosenPriority
             )
-            console.log(dueDateInput.valueAsDate);
             RenderProject.clearProjectContainer();
             document.body.appendChild(this.render());
         });

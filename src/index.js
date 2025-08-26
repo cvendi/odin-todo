@@ -124,9 +124,9 @@ defaultProject.createTask(
             Feel free to delete it with the red - on the right, or mark it as complete with the green + button.
             To create new tasks, fill out the form above.
             You can also create new projects for a separate list of tasks using the Create Project button.`,
-            format(new Date(), "MM-dd-yyyy"),
+            format(new Date(), "yyyy-MM-dd"),
             "Low",
         );
 
-// defaultProject.seedProject();
+defaultProject.seedProject();
 app.init()
