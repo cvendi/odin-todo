@@ -14,7 +14,7 @@ class App {
   }
 
   createProject(name) {
-    const project = new Project(crypto.randomUUID(), name);
+    const project = new Project(name);
     this.projects.push(project);
     return project;
   }
