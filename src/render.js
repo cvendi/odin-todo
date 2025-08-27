@@ -52,7 +52,8 @@ export default class RenderProject {
     const prioritySelector = document.createElement("select");
     priorityValues.forEach((priority) => {
       const priorityOption = document.createElement("option");
-      priorityOption.textContent = priority;
+      const circle = { High: "🔴", Medium: "🟠", Low: "🟡" }[priority];
+      priorityOption.textContent = `${circle} ${priority}`;
       priorityOption.value = priority;
       prioritySelector.appendChild(priorityOption);
     });
@@ -100,7 +101,9 @@ export default class RenderProject {
       taskItem.appendChild(taskDueDate);
 
       const taskPriority = document.createElement("p");
-      taskPriority.textContent = `Priority: ${task.priority}`;
+
+      const circle = { High: "🔴", Medium: "🟠", Low: "🟡" }[task.priority];
+      taskPriority.textContent = `${circle} ${task.priority}`;
       taskPriority.classList.add("priority");
       taskItem.appendChild(taskPriority);
 
@@ -147,8 +150,9 @@ export default class RenderProject {
           taskDueDate.style.color = "var(--nord14)";
           completeButton.style.backgroundColor = "var(--nord11)";
         } else {
+          const circle = { High: "🔴", Medium: "🟠", Low: "🟡" }[task.priority];
           taskItem.style.border = "";
-          taskPriority.textContent = `Priority: ${task.priority}`;
+          taskPriority.textContent = `${circle} ${task.priority}`;
           taskDueDate.textContent = `Due: ${task.dueDate}`;
           taskPriority.style.color = "";
           taskTitle.style.color = "";
@@ -167,8 +171,9 @@ export default class RenderProject {
         taskDueDate.style.color = "var(--nord14)";
         completeButton.style.backgroundColor = "var(--nord11)";
       } else {
+        const circle = { High: "🔴", Medium: "🟠", Low: "🟡" }[task.priority];
         taskItem.style.border = "";
-        taskPriority.textContent = `Priority: ${task.priority}`;
+        taskPriority.textContent = `${circle} ${task.priority}`;
         taskDueDate.textContent = `Due: ${task.dueDate}`;
         taskPriority.style.color = "";
         taskTitle.style.color = "";

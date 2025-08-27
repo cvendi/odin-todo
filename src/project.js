@@ -5,8 +5,8 @@ import Task from "./task.js";
 import { format } from "date-fns";
 
 export default class Project {
-  constructor(name) {
-    this.id = uuidv4();
+  constructor(id, name) {
+    this.id = id;
     this.name = name;
     this.tasks = [];
   }

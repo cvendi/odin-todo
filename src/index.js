@@ -6,6 +6,7 @@ import RenderProject from "./render.js";
 import { saveToLocalStorage, loadProjectsFromLocalStorage } from "./storage.js";
 
 import { format } from "date-fns";
+import { v4 as uuidv4 } from "uuid";
 
 class App {
   constructor() {
@@ -14,7 +15,7 @@ class App {
   }
 
   createProject(name) {
-    const project = new Project(name);
+    const project = new Project(uuidv4(), name);
     this.projects.push(project);
     return project;
   }
@@ -64,7 +65,7 @@ class App {
     if (stored && stored.length > 0) {
       this.projects = stored;
     } else {
-      const defaultProject = this.createProject("Default Project");
+      let defaultProject = this.createProject("Default Project");
       defaultProject.createTask(
         "Welcome to Odin To-Do!",
         `This is a welcome task to get you started.
@@ -74,6 +75,7 @@ class App {
         format(new Date(), "yyyy-MM-dd"),
         "Low"
       );
+
       defaultProject.seedProject();
     }
 
